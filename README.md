@@ -12,6 +12,9 @@ Para cada tamanho de pacote variou-se o intervalo de envio de cada pacote (break
 Após o término da simulação foram gerados gráficos estatisticos sobre a simulação.
 
 ### ATENÇÃO:
+* Para a execução da simulação apenas os arquivos da pasta 'src' tornam-se necessários;
+* Todos os parâmetros da simulaçao podem ser alterados para quaisquer valores desejados no arquivo 'src/run.sh';
+* Para obter ajuda sobre os parâmetros da simulação e sobre o funcionamento dos scripts, execute o script 'run.sh' com o parâmetro '--help'
 * Para que este projeto seja executado, é nessário que o conteúdo da pasta 'src' seja copiado para a pasta 'scratch' presente no diterório de instalação do NS3;
 * Para que este projeto seja executado é necessário executar o script 'run.sh' de dentro da pasta de instalação do ns3 que contem o arquivo 'waf';
 * As pastas 'out', 'plot' e 'xmls' contem respectivamente os dados de saída do script 'mesh-2018.cc', os dados de plotagem e as estatisticas de cada simulação realizada na simulação teste previsamente feita.
