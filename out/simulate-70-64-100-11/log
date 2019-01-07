@@ -1,0 +1,28 @@
+Waf: Entering directory `/opt/ns-allinone-3.28.1/ns-3.28.1/build'
+Waf: Leaving directory `/opt/ns-allinone-3.28.1/ns-3.28.1/build'
+Build commands will be stored in build/compile_commands.json
+'build' finished successfully (1.410s)
+Node is at (0, 0)
+Node is at (70, 0)
+  Flow 1 (10.1.1.2 -> 10.1.1.1)
+  DeliveryRate:                 100 %
+  Throughput:                  0.0350952 Mbps
+  TxBytes:                     46000
+  RxBytes:                     46000
+  TxPackets:                   500
+  RxPackets:                   500
+  LostPackets:	               0
+  DelaySum:                    0.0868476 s
+  DelayMean:                   0.000173695 s
+  JitterSum:                   0.0434435 s
+  JitterMean:                  8.7061e-05 s
+  TimeFirstTxPacket:           0.01 s
+  TimeLastTxPacket:            49.91 s
+  TimeFirstRxPacket:           0.0154672 s
+  TimeLastRxPacket:            49.9106 s
+  MeanTransmittedPacketSize:   92 byte
+  MeanTransmittedBitrate:      7374.75 bit/s
+  MeanHopCount:                1
+  PacketLossRatio:             0
+  MeanReceivedPacketSize:      92 byte
+  MeanReceivedBitrate:         7375.47 bit/s 

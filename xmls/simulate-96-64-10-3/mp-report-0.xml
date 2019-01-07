@@ -1,0 +1,83 @@
+<MeshPointDevice time="50" address="00:00:00:00:00:01">
+<Statistics
+txUnicastData="1"
+txUnicastDataBytes="28"
+txBroadcastData="0"
+txBroadcastDataBytes="0"
+rxUnicastData="4901"
+rxUnicastDataBytes="450892"
+rxBroadcastData="1"
+rxBroadcastDataBytes="28"
+fwdUnicastData="0"
+fwdUnicastDataBytes="0"
+fwdBroadcastData="1"
+fwdBroadcastDataBytes="28"
+/>
+<Interface BeaconInterval="0.5" Channel="0" Address = "00:00:00:00:00:01">
+<Statistics rxBeacons="99" txFrames="30" txBytes="927" rxFrames="4938" rxBytes="520765"/>
+</Interface>
+<Hwmp address="00:00:00:00:00:01"
+maxQueueSize="255"
+Dot11MeshHWMPmaxPREQretries="3"
+Dot11MeshHWMPnetDiameterTraversalTime="0.1024"
+Dot11MeshHWMPpreqMinInterval="0.1024"
+Dot11MeshHWMPperrMinInterval="0.1024"
+Dot11MeshHWMPactiveRootTimeout="5.12"
+Dot11MeshHWMPactivePathTimeout="5.12"
+Dot11MeshHWMPpathToRootInterval="2.048"
+Dot11MeshHWMPrannInterval="5.12"
+isRoot="0"
+maxTtl="32"
+unicastPerrThreshold="32"
+unicastPreqThreshold="1"
+unicastDataThreshold="1"
+doFlag="0"
+rfFlag="1">
+<Statistics txUnicast="1" txBroadcast="1" txBytes="56" droppedTtl="0" totalQueued="1" totalDropped="0" initiatedPreq="1" initiatedPrep="11" initiatedPerr="0"/>
+<HwmpProtocolMac
+address ="00:00:00:00:00:01">
+<Statistics txPreq= "1"
+txPrep="11"
+txPerr="0"
+rxPreq="11"
+rxPrep="1"
+rxPerr="0"
+txMgt="12"
+txMgtBytes="426"
+rxMgt="12"
+rxMgtBytes="486"
+txData="2"
+txDataBytes="72"
+rxData="4902"
+rxDataBytes="490136"/>
+</HwmpProtocolMac>
+</Hwmp>
+<PeerManagementProtocol>
+<Statistics linksTotal="1" linksOpened="4" linksClosed="3"/>
+<PeerManagementProtocolMac address="00:00:00:00:00:01">
+<Statistics txOpen="5"
+txConfirm="4"
+txClose="7"
+rxOpen="7"
+rxConfirm="4"
+rxClose="7"
+dropped="0"
+brokenMgt="0"
+txMgt="16"
+txMgtBytes="417"
+rxMgt="18"
+rxMgtBytes="449"
+beaconShift="5"/>
+</PeerManagementProtocolMac>
+<PeerLink
+localAddress="00:00:00:00:00:01"
+peerInterfaceAddress="00:00:00:00:00:02"
+peerMeshPointAddress="00:00:00:00:00:02"
+metric="81"
+lastBeacon="49.5193"
+localLinkId="5"
+peerLinkId="7"
+assocId="4"
+/>
+</PeerManagementProtocol>
+</MeshPointDevice>
