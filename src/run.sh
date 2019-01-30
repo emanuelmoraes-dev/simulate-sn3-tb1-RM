@@ -33,9 +33,7 @@ chmod +x ./scratch/simulate.sh
 chmod +x ./scratch/plot-data.sh
 
 # Simulação do NS3
-./scratch/simulate.sh --steps 10 60 65 70 75 80 84 88 92 96 100 104 108 112 \
-    --pkgsizes 64 128 512 1024 --breaks 100 10 1 \
-    --outdir /home/emanuel/simulate-ns3-out --count-samples 30
+./scratch/simulate.sh
 
 if [ "$?" != "0" ]; then
     >&1 echo "Erro na Simulação!"
@@ -43,8 +41,5 @@ if [ "$?" != "0" ]; then
 fi
 
 # Geração de gráficos pelo gnuplot com os dados da simulação
-./scratch/plot-data.sh --steps 10 60 65 70 75 80 84 88 92 96 100 104 108 112 \
-    --pkgsizes 64 128 512 1024 --breaks 100 10 1 \
-    --outdir /home/emanuel/simulate-ns3-out --count-samples 30 \
-    --colors blue black red
+./scratch/plot-data.sh
 
