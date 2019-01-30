@@ -112,7 +112,7 @@ function setDefaultValues {
     echo "    e com quantidade de amostras por simulação igual a $countsamples"
 }
 
-export args=("$@") # Parâmetros do usuário
+export args=("$@") # Argumentos do usuário
 
 # Função Principal
 function main {
