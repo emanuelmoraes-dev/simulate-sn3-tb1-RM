@@ -13,20 +13,25 @@ function helpout {
     echo
     echo "    ATENÇÃO:"
     echo "        Este Script necessita da dependência 'gnuplot' instalada"
-    echo "        TODOS os parâmetros são obrigatórios"
     echo "        Para que este Script funcione é necessário que na mesma paste estaja presente o Script mesh-2018.cc e o Script parameter-helper.sh."
     echo "        Para que este Script funcione é necessário que este Script esteja dentro da de scratch do diretório de instalação do ns3"
     echo "        Para que este Script funcione é necessário executar este Script de dentro do diretório de instalação do ns3"
     echo
     echo "    Parâmetros:"
     echo "        --steps <distâncias> : Define as distâncias entre os dois nós usados na simulação em metros."
+    echo "            Valores Padrão: --steps 10 60 65 70 75 $seq80_112"
     echo "        --pkgsizes <tamanhos>: Define os tamanhos de pacotes usados na simulação."
+    echo "            Valores Padrão: --pkgsizes 64 128 512 1024"
     echo "        --breaks <intervalos>: Define os intervalos de envio usados na simulação em milissegundos."
-    echo "        --outdir <diretório de saída>: Define o diretório onde os resultados da simualção foram colocados."
-    echo "        --count-samples <número de amostras>: Define a quantidade de amostras em cada simulação para retirar as médias."
-    echo "        --colors <cores de cada linha do gráfico>: Cada linha do gráfico representa um intervalo contido em '--breaks'"
+    echo "            Valores Padrão --breaks 100 10 1"
+    echo "        --outdir <diretório de saída>: Define o diretório por onde serão jogadas as estatísticas da"
+    echo "            simulação. Valor Padrão --outdir $HOME/simulate-ns3-out"
+    echo "        --count-samples <número de amostras>: Define a quantidade de amostras em cada simulação para."
+    echo "            retirar as médias. Valor Padrão --count-samples 30"
+    echo "        --colors <cores de cada linha do gráfico>: Cada linha do gráfico representa um intervalo contido"
+    echo "            em '--breaks'. Valores Padrão: blue black red"
     echo
-    echo "    Exemplo Completo de Uso do Script:"
+    echo "    Exemplo Completo de Uso do Script Com os Valores Padrão:"
     echo "    ./scratch/plot-data.sh --steps 10 40 80 $seq80_112 --pkgsizes 64 128 512 1024 --breaks 100 10 1 --outdir $HOME/simulate-ns3-out --count-samples 30 --colors blue black red"
     echo
     echo "    Autor deste Script: Emanuel Moraes de Almeida"
@@ -49,13 +54,19 @@ function helperr {
     >&2 echo
     >&2 echo "    Parâmetros:"
     >&2 echo "        --steps <distâncias> : Define as distâncias entre os dois nós usados na simulação em metros."
+    >&2 echo "            Valores Padrão: --steps 10 60 65 70 75 $seq80_112"
     >&2 echo "        --pkgsizes <tamanhos>: Define os tamanhos de pacotes usados na simulação."
+    >&2 echo "            Valores Padrão: --pkgsizes 64 128 512 1024"
     >&2 echo "        --breaks <intervalos>: Define os intervalos de envio usados na simulação em milissegundos."
-    >&2 echo "        --outdir <diretório de saída>: Define o diretório onde os resultados da simulação foram colocados."
-    >&2 echo "        --count-samples <número de amostras>: Define a quantidade de amostras em cada simulação para retirar as médias."
-    >&2 echo "        --colors <cores de cada linha do gráfico>: Cada linha do gráfico representa um intervalo contido em '--breaks'"
+    >&2 echo "            Valores Padrão --breaks 100 10 1"
+    >&2 echo "        --outdir <diretório de saída>: Define o diretório por onde serão jogadas as estatísticas da"
+    >&2 echo "            simulação. Valor Padrão --outdir $HOME/simulate-ns3-out"
+    >&2 echo "        --count-samples <número de amostras>: Define a quantidade de amostras em cada simulação para."
+    >&2 echo "            retirar as médias. Valor Padrão --count-samples 30"
+    >&2 echo "        --colors <cores de cada linha do gráfico>: Cada linha do gráfico representa um intervalo contido"
+    >&2 echo "            em '--breaks'. Valores Padrão: blue black red"
     >&2 echo
-    >&2 echo "    Exemplo Completo de Uso do Script:"
+    >&2 echo "    Exemplo Completo de Uso do Script Com os Valores Padrão:"
     >&2 echo "    ./scratch/plot-data.sh --steps 10 40 80 $seq80_112 --pkgsizes 64 128 512 1024 --breaks 100 10 1 --outdir $HOME/simulate-ns3-out --count-samples 30 --colors blue red black"
     >&2 echo
 }
@@ -94,43 +105,31 @@ function maxstep {
     echo $max
 }
 
-# Verificando se parâmetros da simulação são vazios
-function verifyValuesParams {
+# Definindo parâmetros padrão da simulação caso estejam vazios
+function setDefaultValues {
     echo "Definindo parâmetros padrão da simulação caso estejam vazios..."
     if [ "${#steps[@]}" = "0" ]; then # Se 'steps' for um array vazio
-        helperr # Executa função de ajuda
-        >&2 echo "Erro! argumento '--steps' obrigatório" # Exibe mensagem de erro
-        exit 2 # Script finalizado com erro
+        steps=(10 60 65 70 75 $seq80_112) # Valores padrão das distâncias em metros
     fi
 
     if [ "${#pkgsizes[@]}" = "0" ]; then # Se 'pkgsizes' for um array vazio
-        helperr # Executa função de ajuda
-        >&2 echo "Erro! argumento '--pkgsizes' obrigatório" # Exibe mensagem de erro
-        exit 2 # Script finalizado com erro
+        pkgsizes=(64 128 512 1024) # Valores padrão dos tamanhos dos pacotes em bytes
     fi
 
-    if [ "${#breaks[@]}" = "0" ]; then # Se 'break' for um array vazio
-        helperr # Executa função de ajuda
-        >&2 echo "Erro! argumento '--breaks' obrigatório" # Exibe mensagem de erro
-        exit 2 # Script finalizado com erro
-    fi
-
-    if [ "${#colors[@]}" = "0" ]; then
-        helperr # Executa função de ajuda
-        >&2 echo "Erro! argumento '--colors' obrigatório" # Exibe mensagem de erro
-        exit 2 # Script finalizado com erro
+    if [ "${#breaks[@]}" = "0" ]; then # Se 'breaks' for um array vazio
+        breaks=(100 10 1) # Valores padrão dos intervalos entre os pacotes em milissegundos
     fi
 
     if [ -z "$outdir" ]; then # Se 'outdir' for uma string vazia
-        helperr # Executa função de ajuda
-        >&2 echo "Erro! argumento 'outdir' obrigatório"
-        exit 2 # Script finalizado com erro
+        outdir="$HOME/simulate-ns3-out" # Valor padrão do diretório por onde serão jogados as estatisticas da simulação
     fi
 
     if [ -z "$countsamples" ]; then # Se 'countsamples' for uma string vazia
-        helperr # Executa função de ajuda
-        >&2 echo "Erro! argumento '--count-samples' obrigatório" # Exibe mensagem de erro
-        exit 2 # Script finalizado com erro
+        countsamples=30 # Valor padrão para a quantidade de amostras em cada simulação
+    fi
+
+    if [ "${#colors[@]}" = "0" ]; then # Se 'colors' for um array vazio
+        colors=(blue black red) # Valores padrão para as cores das linhas dos gráficos
     fi
 
     echo "    Gerando dados de plotagem da simulação de com as distâncias ${steps[@]}, "
@@ -253,7 +252,7 @@ function main {
     colors=(`./scratch/parameter-helper.sh -index 5 -args steps pkgsizes breaks outdir count-samples colors "${args[@]}"`)
     IFS=' '
     
-    verifyValuesParams # Verificando se parâmetros da simulação são vazios
+    setDefaultValues # Definindo parâmetros padrão da simulação caso estejam vazios
 
     # Iniciando extração dos dados...
     echo "Iniciando extração dos dados..."
