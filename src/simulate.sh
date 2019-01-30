@@ -80,16 +80,8 @@ echo "Declarando parâmetros..."
 export steps=() # Distâncias a serem testadas
 export pkgsizes=() # Tamanho dos pacotes a serem testados
 export breaks=() # Intevalos de envio de pacotes
-
-# Definindo valor padrão para o diretório por onde serão jogados as estatisticas da simulação
-echo "Definindo valor padrão para o diretório por onde serão jogados as estatisticas da simulação..."
-
-export outdir="$HOME/simulate-ns3-out"
-
-# Definindo valor padrão para a quantidade de amostras em cada simulação
-echo "Definindo valor padrão para a quantidade de amostras em cada simulação..."
-
-export countsamples=30
+export outdir="" # Valor do diretório por onde serão jogados as estatisticas da simulação
+export countsamples="" # Valor para a quantidade de amostras em cada simulação
 
 # Definindo parâmetros padrão da simulação caso estejam vazios
 function setDefaultValues {
@@ -104,6 +96,14 @@ function setDefaultValues {
 
     if [ "${#breaks[@]}" = "0" ]; then # Se 'breaks' for um array vazio
         breaks=(100 10 1) # Valores padrão dos intervalos entre os pacotes em milissegundos
+    fi
+
+    if [ -z "$outdir" ]; then # Se 'outdir' for uma string vazia
+        outdir="$HOME/simulate-ns3-out" # Valor padrão do diretório por onde serão jogados as estatisticas da simulação
+    fi
+
+    if [ -z "$countsamples" ]; then # Se 'countsamples' for uma string vazia
+        countsamples=30 # Valor padrão para a quantidade de amostras em cada simulação
     fi
 
     echo "    Iniciando simulação com variação de distâncias ${steps[@]} "

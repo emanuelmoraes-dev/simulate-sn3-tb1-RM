@@ -297,7 +297,7 @@ function main {
                     y_average=0
                 fi
 
-                echo "Taca de entrega da amostra 1 = $y_average"
+                echo "Taxa de entrega da amostra 1 = $y_average"
 
                 for ((count=2 ; count <= countsamples ; count++)); do
                     echo "Avaliando amostra $count..."
