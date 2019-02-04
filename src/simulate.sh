@@ -134,6 +134,11 @@ function main {
     countsamples="`./scratch/parameter-helper.sh -index 4 -args steps pkgsizes breaks outdir count-samples \"${args[@]}\"`"
     IFS=' '
 
+    if [ "$?" != "0" ]; then # Se deu erro no recebimento do argumento
+        >&2 echo "Erro nos argumentos passados pelo usuário" # Mensagem de erro
+        exit $? # Finaliza Script com erro
+    fi
+
     setDefaultValues # Seta valores padrão para os valores da simulação caso usuário não tenha os modificados
 
     # Iniciando simulação

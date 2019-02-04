@@ -151,6 +151,11 @@ function generateTxtData {
     yvalues=(`./scratch/parameter-helper.sh -index 3 -args folder-name filename x-values y-values "$@"`)
     IFS=' '
 
+    if [ "$?" != "0" ]; then # Se deu erro no recebimento do argumento
+        >&2 echo "Erro nos argumentos passados pelo usuário" # Mensagem de erro
+        exit $? # Finaliza Script com erro
+    fi
+
     plotfolder="$outdir/$foldername" # Path da pasta de plotagem
     txt="$plotfolder/$filename.txt" # Path do arquivo .txt
     mkdir -p $plotfolder # Gerando pasta de plotagem
@@ -188,6 +193,11 @@ function generatePlot {
     txtdata=(`./scratch/parameter-helper.sh -index 6 -args folder-name filename x-range y-range x-label y-label txt-data titles "$@"`)
     titles=(`./scratch/parameter-helper.sh -index 7 -args folder-name filename x-range y-range x-label y-label txt-data titles "$@"`)
     IFS=' '
+
+    if [ "$?" != "0" ]; then # Se deu erro no recebimento do argumento
+        >&2 echo "Erro nos argumentos passados pelo usuário" # Mensagem de erro
+        exit $? # Finaliza Script com erro
+    fi
 
     # Preparando plotagem
     echo "Preparando plotagem..."
@@ -251,6 +261,11 @@ function main {
     countsamples="`./scratch/parameter-helper.sh -index 4 -args steps pkgsizes breaks outdir count-samples colors \"${args[@]}\"`"
     colors=(`./scratch/parameter-helper.sh -index 5 -args steps pkgsizes breaks outdir count-samples colors "${args[@]}"`)
     IFS=' '
+
+    if [ "$?" != "0" ]; then # Se deu erro no recebimento do argumento
+        >&2 echo "Erro nos argumentos passados pelo usuário" # Mensagem de erro
+        exit $? # Finaliza Script com erro
+    fi
     
     setDefaultValues # Definindo parâmetros padrão da simulação caso estejam vazios
 
