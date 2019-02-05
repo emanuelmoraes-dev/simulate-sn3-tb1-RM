@@ -144,16 +144,17 @@ function setDefaultValues {
 # --x-values = valores do eixo x
 # --y-values = valores do eixo y
 function generateTxtData {
-    IFS=$'\n'
-    foldername="`./scratch/parameter-helper.sh -index 0 -args folder-name filename x-values y-values \"$@\"`"
-    filename="`./scratch/parameter-helper.sh -index 1 -args folder-name filename x-values y-values \"$@\"`"
-    xvalues=(`./scratch/parameter-helper.sh -index 2 -args folder-name filename x-values y-values "$@"`)
-    yvalues=(`./scratch/parameter-helper.sh -index 3 -args folder-name filename x-values y-values "$@"`)
+    IFS=$'\n' &&
+    foldername="`./scratch/parameter-helper.sh -index 0 -args folder-name filename x-values y-values \"$@\"`" &&
+    filename="`./scratch/parameter-helper.sh -index 1 -args folder-name filename x-values y-values \"$@\"`" &&
+    xvalues=(`./scratch/parameter-helper.sh -index 2 -args folder-name filename x-values y-values "$@"`) &&
+    yvalues=(`./scratch/parameter-helper.sh -index 3 -args folder-name filename x-values y-values "$@"`) &&
     IFS=' '
 
-    if [ "$?" != "0" ]; then # Se deu erro no recebimento do argumento
+    cod="$?"
+    if [ "$cod" != "0" ]; then # Se deu erro
         >&2 echo "Erro nos argumentos passados pelo usuário" # Mensagem de erro
-        exit $? # Finaliza Script com erro
+        exit $cod # Finaliza Script com erro
     fi
 
     plotfolder="$outdir/$foldername" # Path da pasta de plotagem
@@ -183,20 +184,21 @@ function generateTxtData {
 # --txt-data = Nomes dos arquivos txt contendo os dados de plotagem
 # --titles = Nomes das legendas de cada linha
 function generatePlot {
-    IFS=$'\n'
-    foldername="`./scratch/parameter-helper.sh -index 0 -args folder-name filename x-range y-range x-label y-label txt-data titles \"$@\"`"
-    filename="`./scratch/parameter-helper.sh -index 1 -args folder-name filename x-range y-range x-label y-label txt-data titles \"$@\"`"
-    xrange="`./scratch/parameter-helper.sh -index 2 -args folder-name filename x-range y-range x-label y-label txt-data titles \"$@\"`"
-    yrange="`./scratch/parameter-helper.sh -index 3 -args folder-name filename x-range y-range x-label y-label txt-data titles \"$@\"`"
-    xlabel="`./scratch/parameter-helper.sh -index 4 -args folder-name filename x-range y-range x-label y-label txt-data titles \"$@\"`"
-    ylabel="`./scratch/parameter-helper.sh -index 5 -args folder-name filename x-range y-range x-label y-label txt-data titles \"$@\"`"
-    txtdata=(`./scratch/parameter-helper.sh -index 6 -args folder-name filename x-range y-range x-label y-label txt-data titles "$@"`)
-    titles=(`./scratch/parameter-helper.sh -index 7 -args folder-name filename x-range y-range x-label y-label txt-data titles "$@"`)
+    IFS=$'\n' &&
+    foldername="`./scratch/parameter-helper.sh -index 0 -args folder-name filename x-range y-range x-label y-label txt-data titles \"$@\"`" &&
+    filename="`./scratch/parameter-helper.sh -index 1 -args folder-name filename x-range y-range x-label y-label txt-data titles \"$@\"`" &&
+    xrange="`./scratch/parameter-helper.sh -index 2 -args folder-name filename x-range y-range x-label y-label txt-data titles \"$@\"`" &&
+    yrange="`./scratch/parameter-helper.sh -index 3 -args folder-name filename x-range y-range x-label y-label txt-data titles \"$@\"`" &&
+    xlabel="`./scratch/parameter-helper.sh -index 4 -args folder-name filename x-range y-range x-label y-label txt-data titles \"$@\"`" &&
+    ylabel="`./scratch/parameter-helper.sh -index 5 -args folder-name filename x-range y-range x-label y-label txt-data titles \"$@\"`" &&
+    txtdata=(`./scratch/parameter-helper.sh -index 6 -args folder-name filename x-range y-range x-label y-label txt-data titles "$@"`) &&
+    titles=(`./scratch/parameter-helper.sh -index 7 -args folder-name filename x-range y-range x-label y-label txt-data titles "$@"`) &&
     IFS=' '
 
-    if [ "$?" != "0" ]; then # Se deu erro no recebimento do argumento
+    cod="$?"
+    if [ "$cod" != "0" ]; then # Se deu erro
         >&2 echo "Erro nos argumentos passados pelo usuário" # Mensagem de erro
-        exit $? # Finaliza Script com erro
+        exit $cod # Finaliza Script com erro
     fi
 
     # Preparando plotagem
@@ -253,18 +255,19 @@ function main {
         exit 0 # Finaliza Script com Sucesso
     fi
 
-    IFS=$'\n'
-    steps=(`./scratch/parameter-helper.sh -index 0 -args steps pkgsizes breaks outdir count-samples colors "${args[@]}"`)
-    pkgsizes=(`./scratch/parameter-helper.sh -index 1 -args steps pkgsizes breaks outdir count-samples colors "${args[@]}"`)
-    breaks=(`./scratch/parameter-helper.sh -index 2 -args steps pkgsizes breaks outdir count-samples colors "${args[@]}"`)
-    outdir="`./scratch/parameter-helper.sh -index 3 -args steps pkgsizes breaks outdir count-samples colors \"${args[@]}\"`"
-    countsamples="`./scratch/parameter-helper.sh -index 4 -args steps pkgsizes breaks outdir count-samples colors \"${args[@]}\"`"
-    colors=(`./scratch/parameter-helper.sh -index 5 -args steps pkgsizes breaks outdir count-samples colors "${args[@]}"`)
+    IFS=$'\n' &&
+    steps=(`./scratch/parameter-helper.sh -index 0 -args steps pkgsizes breaks outdir count-samples colors "${args[@]}"`) &&
+    pkgsizes=(`./scratch/parameter-helper.sh -index 1 -args steps pkgsizes breaks outdir count-samples colors "${args[@]}"`) &&
+    breaks=(`./scratch/parameter-helper.sh -index 2 -args steps pkgsizes breaks outdir count-samples colors "${args[@]}"`) &&
+    outdir="`./scratch/parameter-helper.sh -index 3 -args steps pkgsizes breaks outdir count-samples colors \"${args[@]}\"`" &&
+    countsamples="`./scratch/parameter-helper.sh -index 4 -args steps pkgsizes breaks outdir count-samples colors \"${args[@]}\"`" &&
+    colors=(`./scratch/parameter-helper.sh -index 5 -args steps pkgsizes breaks outdir count-samples colors "${args[@]}"`) &&
     IFS=' '
 
-    if [ "$?" != "0" ]; then # Se deu erro no recebimento do argumento
+    cod="$?"
+    if [ "$cod" != "0" ]; then # Se deu erro
         >&2 echo "Erro nos argumentos passados pelo usuário" # Mensagem de erro
-        exit $? # Finaliza Script com erro
+        exit $cod # Finaliza Script com erro
     fi
     
     setDefaultValues # Definindo parâmetros padrão da simulação caso estejam vazios
@@ -344,6 +347,12 @@ function main {
             # Gera arquivo txt novo para cada linha
             generateTxtData --folder-name "plot/pkgsize-$pkgsize" --filename "graphic-interval-$interval" \
                 --x-values "${xvalues[@]}" --y-values "${yvalues[@]}"
+
+            cod="$?"
+            if [ "$cod" != "0" ]; then # Se deu erro
+                >&2 echo "Erro ao gerar txt da função do gráfico da taxa de entrega X topologia de tamanho de pacote $pkgsize" # Mensagem de erro
+                exit $cod # Finaliza Script com erro
+            fi
         done
 
         echo "Gerando gráfico '$outdir/plot/pkgsize-$pkgsize/graphic-pkgsize-$pkgsize.pdf' com os dados coletados..."
@@ -352,6 +361,12 @@ function main {
         generatePlot --folder-name "plot/pkgsize-$pkgsize" --filename "graphic-pkgsize-$pkgsize" --x-range "0:`maxstep`" \
             --y-range "0:110" --x-label "Distância" --y-label "Taxa de Entrega" --txt-data "${txtdata[@]}" \
             --titles "${titles[@]}"
+
+        cod="$?"
+        if [ "$cod" != "0" ]; then # Se deu erro
+            >&2 echo "Erro ao gerar gráfico da taxa de entrega X topologia de tamanho de pacote $pkgsize" # Mensagem de erro
+            exit $cod # Finaliza Script com erro
+        fi
     done
 
     echo

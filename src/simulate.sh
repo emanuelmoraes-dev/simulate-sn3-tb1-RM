@@ -126,17 +126,18 @@ function main {
 
     # Modifica valores da simulação pelos argumentos passados pelo usuário
     
-    IFS=$'\n'
-    steps=(`./scratch/parameter-helper.sh -index 0 -args steps pkgsizes breaks outdir count-samples "${args[@]}"`)
-    pkgsizes=(`./scratch/parameter-helper.sh -index 1 -args steps pkgsizes breaks outdir count-samples "${args[@]}"`)
-    breaks=(`./scratch/parameter-helper.sh -index 2 -args steps pkgsizes breaks outdir count-samples "${args[@]}"`)
-    outdir=(`./scratch/parameter-helper.sh -index 3 -args steps pkgsizes breaks outdir count-samples "${args[@]}"`)
-    countsamples="`./scratch/parameter-helper.sh -index 4 -args steps pkgsizes breaks outdir count-samples \"${args[@]}\"`"
+    IFS=$'\n' &&
+    steps=(`./scratch/parameter-helper.sh -index 0 -args steps pkgsizes breaks outdir count-samples "${args[@]}"`) &&
+    pkgsizes=(`./scratch/parameter-helper.sh -index 1 -args steps pkgsizes breaks outdir count-samples "${args[@]}"`) &&
+    breaks=(`./scratch/parameter-helper.sh -index 2 -args steps pkgsizes breaks outdir count-samples "${args[@]}"`) &&
+    outdir=(`./scratch/parameter-helper.sh -index 3 -args steps pkgsizes breaks outdir count-samples "${args[@]}"`) &&
+    countsamples="`./scratch/parameter-helper.sh -index 4 -args steps pkgsizes breaks outdir count-samples \"${args[@]}\"`" &&
     IFS=' '
 
-    if [ "$?" != "0" ]; then # Se deu erro no recebimento do argumento
+    cod="$?"
+    if [ "$cod" != "0" ]; then # Se deu erro
         >&2 echo "Erro nos argumentos passados pelo usuário" # Mensagem de erro
-        exit $? # Finaliza Script com erro
+        exit $cod # Finaliza Script com erro
     fi
 
     setDefaultValues # Seta valores padrão para os valores da simulação caso usuário não tenha os modificados
@@ -178,6 +179,13 @@ function main {
                     # Executa com o ns3 o script 'mesh-2018.cc' que realizará a simulação com os parâmetros fornecidos
                     ./waf --run "scratch/mesh-2018 --step=$step --packet-size=$pkgsize --packet-interval=$newinterval" \
                         1> "$outdir/out/simulate-$step-$pkgsize-$interval-$count/log"
+
+                    cod="$?"
+                    if [ "$cod" != "0" ]; then # Se deu erro
+                        >&2 echo "Erro na execução de simulação" # Mensagem de erro
+                        exit $cod # Finaliza Script com erro
+                    fi
+
                     # Cria diretório para receber os xmls resultados da simulação
                     mkdir -p "$outdir/xmls/simulate-$step-$pkgsize-$interval-$count"
                     # Move para diretório de saida os resultados da simulação
